@@ -1,0 +1,131 @@
+Assignment name  : micro_paint
+Expected files   : *.c *.h
+Allowed functions: fopen, fread, fscanf, fclose, write, malloc, calloc, realloc, free, memset, powf, sqrtf
+--------------------------------------------------------------------------------------
+en
+Write a program that will read an "operation file" and print the result in the terminal
+
+Your program must take one argument, it will be the path to the "operation file"
+If 0 or more than 1 argument is given to your program write "Error: argument" followed by a \n in STDOUT
+
+$> ./micro_paint | cat -e
+Error: argument$
+$> ./micro_paint do not fear mathematics | cat -e
+Error: argument$
+$> 
+
+If any problem occurs while you open and/or read the "operation file" write "Error: Operation file corrupted" followed by a \n in STDOUT
+
+The "operation file" will contains lines with one operation per line
+If a line is incorrect an error occurs.
+If an error has occured your program must return 1
+If no error has occured it must return 0
+The last line can be with or without a \n
+The lines must be read in order and therefore operations must be executed in the same order
+There must be one space between each variable in a line
+
+WIDTH HEIGHT BACKGROUND_CHAR
+This line is always the first line of the file and it defines the zone where to draw. Your program should not display anything outside the draw zone. It must be there only once.
+- WIDTH: must be a int with 0 < WIDTH <= 300, the horizontal number of characters to use for the draw zone
+- HEIGHT: must be a int with 0 < HEIGHT <= 300, the vertical number of characters to use for the draw zone 
+- BACKGROUND_CHAR: any empty space will be filled with BACKGROUND_CHAR
+
+r X Y WIDTH HEIGHT CHAR
+This operation will draw an empty rectangle, where only the border of the rectangle is drawn
+- r: the character r
+- X: any float, the horizontal position of the top left corner of the rectangle
+- Y: any float, the vertical position of the top left corner of the rectangle
+- WIDTH: a positive float but not 0, the width of the rectangle (horizontal)
+- HEIGHT: a positive float but not 0, the height of the rectangle (vertical)
+- CHAR: the char use to draw the rectangle
+
+R X Y WIDTH HEIGHT CHAR
+This operation will draw a filled rectangle
+- R: the character R
+- X: any float, the horizontal position of the top left corner of the rectangle
+- Y: any float, the vertical position of the top left corner of the rectangle
+- WIDTH: a positive float but not 0, the width of the rectangle (horizontal)
+- HEIGHT: a positive float but not 0, the height of the rectangle (vertical)
+- CHAR: the char use to draw the rectangle
+
+The draw zone is divided in rectangles that can contain one character each (because we are in a terminal...), we will call them pixel
+To make everything easier, we will use only the top left corner of the pixel to know if that pixel is in a rectangle or not
+A pixel with a top left corner with a distance bigger or equal than 1 from the border of a rectangle is not part of an empty rectangle 
+A pixel with a top left corner with a distance lower than 1 from the border of a rectangle is part of an empty rectangle.
+
+You should look at the image while reading the next few lines. It represents a terminal. We've set a draw zone of WIDTH 5 and HEIGHT 3.
+We've wrote different character to help you understand the following explanations.
+- If you want to draw the operation: r 2.5 1.5 1 1 X (the green rectangle)
+-- it means that the character 'D' in the image will be replaced by 'X' 
+
+You should find our_micro_paint to help you test yours with some operation_file.example
+
+Hint:
+If a point is defined as (Xa, Ya)
+And a rectangle with a top left corner (Xtl, Ytl) and a bottom right corner (Xbr, Ybr)
+If Xtl <= Xa <= Xbr and Ytl <= Ya <= Ybr then the point is in the rectangle
+
+----------------------------------------------------------------------------------------------------------
+ru
+Напишите программу, которая будет считывать "операционный файл" и печатать результат в терминале
+
+Ваша программа должна принять один аргумент, это будет путь к файлу " operation"
+Если вашей программе задано 0 или более 1 аргумента, напишите "Error: argument", а затем \n в STDOUT
+
+$> ./micro_paint | cat -e
+Error: argument$
+$> ./micro_paint do not fear mathematics | cat -e
+Error: argument$
+$> 
+
+Если какая-либо проблема возникает при открытии и / или чтении "операционного файла", напишите "Error: Operation file corrupted", а затем \n в STDOUT
+
+"Операционный файл" будет содержать строки с одной операцией в строке
+Если строка неверна, то возникает ошибка.
+Если произошла ошибка ваша программа должна вернуть 1
+Если никакой ошибки не произошло он должен вернуть 0
+Последняя строка может быть с или без \n
+Строки должны быть прочитаны по порядку и поэтому операции должны выполняться в том же порядке
+Между каждой переменной в строке должно быть по одному пробелу
+
+ WIDTH HEIGHT BACKGROUND_CHAR
+Эта строка всегда является первой строкой файла и определяет зону, в которой нужно рисовать. Ваша программа не должна отображать ничего за пределами зоны розыгрыша. Он должен быть там только один раз.
+- WIDTH: должен быть int с 0 < WIDTH <= 300, горизонтальное количество символов, используемых для зоны рисования
+- HEIGHT: должен быть int с 0 < HEIGHT <= 300, вертикальное количество символов, используемых для зоны рисования
+- BACKGROUND_CHAR: любое пустое пространство будет заполнено BACKGROUND_CHAR
+
+r X Y WIDTH HEIGHT CHAR
+Эта операция нарисует пустой прямоугольник, где будет нарисована только граница прямоугольника
+- r: символ r
+- X: любой float, горизонтальное положение верхнего левого угла прямоугольника
+- Y: любой float, вертикальное положение верхнего левого угла прямоугольника
+- WIDTH: положительный float, но не 0, ширина прямоугольника (горизонтальная)
+- HEIGHT: положительный float, но не 0, высота прямоугольника (вертикальная)
+- CHAR: символ используется для рисования прямоугольника
+
+R X Y WIDTH HEIGHT CHAR
+Эта операция нарисует заполненный прямоугольник
+- R: символ R
+- X: любой float, горизонтальное положение верхнего левого угла прямоугольника
+- Y: любой float, вертикальное положение верхнего левого угла прямоугольника
+- WIDTH : положительный float, но не 0, ширина прямоугольника (горизонтальная)
+- HEIGHT: положительный float, но не 0, высота прямоугольника (вертикальная)
+- CHAR: символ используется для рисования прямоугольника
+
+Зона рисования разделена на прямоугольники, которые могут содержать по одному символу каждый (потому что мы находимся в терминале...), мы будем называть их пиксельными
+Чтобы сделать все проще, мы будем использовать только верхний левый угол пикселя, чтобы узнать, находится ли этот пиксель в прямоугольнике или нет
+Пиксель с верхним левым углом на расстоянии больше или равном 1 от границы прямоугольника не является частью пустого прямоугольника
+Пиксель с верхним левым углом на расстоянии меньше 1 от границы прямоугольника является частью пустого прямоугольника.
+
+Вы должны смотреть на изображение, читая следующие несколько строк. Он представляет собой терминал. Мы установили зону розыгрыша шириной 5 и высотой 3.
+Мы написали другой символ, чтобы помочь вам понять следующие объяснения.
+- Если вы хотите нарисовать операцию: r 2.5 1.5 1 1 X (зеленый прямоугольник)
+-- это означает, что символ " D "на изображении будет заменен на "X"
+
+Вы должны найти our_micro_paint, чтобы помочь вам протестировать ваш с некоторым operation_file.пример
+
+Подсказка:
+Если точка определена как (Xa, Ya)
+И прямоугольник с верхним левым углом (Xtl, Ytl) и нижним правым углом (Xbr, Ybr)
+
+Если Xtl <= Xa <= Xbr и Ytl <= Ya <= Ybr, то точка находится в прямоугольнике
