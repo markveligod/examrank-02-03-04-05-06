@@ -96,14 +96,14 @@ char    *ft_itoa(int n)
 	return (array);
 }
 
-int     ft_add_width(int size)
+int     ft_add_width(int size, char c)
 {
     int i;
 
     i = 0;
     while (i < size)
     {
-        write(1, " ", 1);
+        write(1, &c, 1);
         i++;
     }
     return (i);
@@ -134,7 +134,9 @@ int     ft_print_int(t_lst list_flags, va_list argv)
     str = ft_itoa(num);
     size = ft_strlen(str);
     if (list_flags.width > size)
-        count += ft_add_width(list_flags.width - size);
+        count += ft_add_width((list_flags.precision > size) ? list_flags.precision - size : list_flags.width - size, (list_flags.precision > size) ? '0' : ' ');
+    else
+        count += (list_flags.precision > size) ? ft_add_width(list_flags.precision - size, '0') : 0;
     count += ft_putstr(str);
     free(str);
     return (count);
@@ -171,7 +173,7 @@ int     ft_print_str(t_lst list_flags, va_list argv)
 		str = ft_strdup("(null)");
 	size = ft_strlen(str);
     if (list_flags.width > size)
-        count += ft_add_width(list_flags.width - ((list_flags.precision > 0 && list_flags.precision < size) ? list_flags.precision : size));
+        count += ft_add_width(list_flags.width - ((list_flags.precision > 0 && list_flags.precision < size) ? list_flags.precision : size), ' ');
     if (list_flags.precision > 0 && list_flags.precision < size)
     {
         i = 0;
@@ -226,7 +228,6 @@ int     ft_print_xxx(char *array_hex, t_lst list_flags, va_list argv)
     char				*str;
 	int					size;
 	int					count;
-    int                 i;
 	unsigned long long	num;
 
 	num = va_arg(argv, unsigned long long);
@@ -237,17 +238,9 @@ int     ft_print_xxx(char *array_hex, t_lst list_flags, va_list argv)
 	size = ft_strlen(str);
 	count = 0;
     if (list_flags.width > 0)
-        count += ft_add_width(list_flags.width - (size + 2));
-    if (list_flags.precision > size)
-    {
-        i = 0;
-        while (i < list_flags.precision - size)
-        {
-            write(1, "0", 1);
-            count++;
-            i++;
-        }
-    }
+        count += (list_flags.precision > size) ? ft_add_width(list_flags.precision - size, '0') : ft_add_width(list_flags.width - size, ' ');
+    else
+        count += (list_flags.precision > size) ? ft_add_width(list_flags.precision - size, '0') : 0;
     count += ft_putstr(str);
     free(str);
     return (count);
