@@ -146,6 +146,7 @@ char     *ft_strdup(char *str)
     int i;
     int size;
 
+	i = 0;
     size = ft_strlen(str);
     if(!(array = (char *)malloc(sizeof(char) * (size + 1))))
         return (NULL);
