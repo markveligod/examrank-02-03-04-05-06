@@ -14,6 +14,7 @@ t_lst   ft_init_flags(t_lst list_flags)
     list_flags.width = 0;
     list_flags.point = 0;
     list_flags.precision = 0;
+    return (list_flags);
 }
 
 int		ft_check_flag(char flag)
@@ -21,19 +22,20 @@ int		ft_check_flag(char flag)
 	return ((flag >= '0' && flag <= '9') || flag == '.');
 }
 
-t_lst   ft_cut_flags(const char *flag, t_lst list_flags, va_list argv)
+t_lst   ft_cut_flags(const char *flag, t_lst list_flags)
 {
     int i;
 
     i = 0;
     while (flag[i] && ft_check_flag(flag[i]))
     {
-        if ((flag >= '0' && flag <= '9') && list_flags.point == 0)
+        if ((flag[i] >= '0' && flag[i] <= '9') && list_flags.point == 0)
             list_flags.width = (list_flags.width * 10) + (flag[i] - '0');
         else if (flag[i] == '.')
             list_flags.point = 1;
-        else if ((flag >= '0' && flag <= '9') && list_flags.point == 1)
-            list_flags.precision = (list_flags.width * 10) + (flag[i] - '0');
+        else if ((flag[i] >= '0' && flag[i] <= '9') && list_flags.point == 1)
+            list_flags.precision = (list_flags.precision * 10) + (flag[i] - '0');
+        i++;
     }
     return (list_flags);
 }
@@ -101,7 +103,7 @@ int     ft_add_width(int size)
     i = 0;
     while (i < size)
     {
-        write(1, ' ', 1);
+        write(1, " ", 1);
         i++;
     }
     return (i);
@@ -134,10 +136,11 @@ int     ft_print_int(t_lst list_flags, va_list argv)
     if (list_flags.width > size)
         count += ft_add_width(list_flags.width - size);
     count += ft_putstr(str);
+    free(str);
     return (count);
 }
 
-int     ft_strdup(char *str)
+char     *ft_strdup(char *str)
 {
     char *array;
     int i;
@@ -167,9 +170,10 @@ int     ft_print_str(t_lst list_flags, va_list argv)
 		str = ft_strdup("(null)");
 	size = ft_strlen(str);
     if (list_flags.width > size)
-        count += ft_add_width(list_flags.width - size);
+        count += ft_add_width(list_flags.width - ((list_flags.precision > 0 && list_flags.precision < size) ? list_flags.precision : size));
     if (list_flags.precision > 0 && list_flags.precision < size)
     {
+        i = 0;
         while (i < list_flags.precision)
         {
             write(1, &str[i], 1);
@@ -179,6 +183,72 @@ int     ft_print_str(t_lst list_flags, va_list argv)
     }
     else
         count += ft_putstr(str);
+    return (count);
+}
+
+int		ft_check_num(unsigned long long number, int size)
+{
+	int	count;
+
+	count = 0;
+	while (number > 0)
+	{
+		number /= size;
+		count++;
+	}
+	return (count);
+}
+
+char	*ft_convert_pointer(char *array_hex, unsigned long long number)
+{
+	int		size_hex;
+	int		count_num;
+	char	*str;
+
+	size_hex = ft_strlen(array_hex);
+	count_num = ft_check_num(number, size_hex);
+	if (!(str = (char *)malloc(sizeof(char) * (count_num + 1))))
+		return (NULL);
+	str[count_num] = '\0';
+	while (--count_num)
+	{
+		str[count_num] = array_hex[number % size_hex];
+		number /= size_hex;
+	}
+	if (count_num == 0)
+		str[count_num] = array_hex[number % size_hex];
+	return (str);
+}
+
+int     ft_print_xxx(char *array_hex, t_lst list_flags, va_list argv)
+{
+    char				*str;
+	int					size;
+	int					count;
+    int                 i;
+	unsigned long long	num;
+
+	num = va_arg(argv, unsigned long long);
+	if (!num)
+		str = ft_strdup("0");
+	else
+		str = ft_convert_pointer(array_hex, num);
+	size = ft_strlen(str);
+	count = 0;
+    if (list_flags.width > 0)
+        count += ft_add_width(list_flags.width - (size + 2));
+    if (list_flags.precision > size)
+    {
+        i = 0;
+        while (i < list_flags.precision - size)
+        {
+            write(1, "0", 1);
+            count++;
+            i++;
+        }
+    }
+    count += ft_putstr(str);
+    free(str);
     return (count);
 }
 
@@ -192,7 +262,7 @@ int     ft_print_value(char flag, t_lst list_flags, va_list argv)
     else if (flag == 's')
         count += ft_print_str(list_flags, argv);
     else if (flag == 'x')
-        count += ft_print_xxx( "0123456789abcdef", list_flags, argv);
+        count += ft_print_xxx("0123456789abcdef", list_flags, argv);
     return (count);
 }
 
@@ -204,6 +274,7 @@ int     ft_printf(const char *str, ... )
     t_lst list_flags;
 
     count = 0;
+    i = 0;
     va_start(argv, str);
     while (str[i])
     {
@@ -212,7 +283,7 @@ int     ft_printf(const char *str, ... )
         {
             i++;
             list_flags = ft_init_flags(list_flags);
-            list_flags = ft_cut_flags(&str[i], list_flags, argv);
+            list_flags = ft_cut_flags(&str[i], list_flags);
             while (ft_check_flag(str[i]))
                 i++;
             count += ft_print_value(str[i], list_flags, argv);
