@@ -180,7 +180,8 @@ char *get_long(unsigned long long number)
 		str[size] = array_hex[number % 16];
 		number /= 16;
 	}
-	str[size] = array_hex[number % 16];
+	if (size == 0)
+		str[size] = array_hex[number % 16];
 	return (str);
 }
 
@@ -212,8 +213,6 @@ int 	sort_spec(char c, t_list flags, va_list value)
 		count += print_xxx(flags, value);
 	return (count);
 }
-
-
 
 int ft_printf(char *str, ...)
 {

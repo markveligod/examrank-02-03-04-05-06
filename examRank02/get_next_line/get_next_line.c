@@ -96,19 +96,6 @@ char    *cut_next_line(char *remains)
     return (array);
 }
 
-int     check_remains(char *remains)
-{
-    int	i;
-
-	i = -1;
-	if (!remains)
-		return (0);
-	while (remains[++i])
-		if (remains[i] == '\n')
-			return (1);
-	return (0);
-}
-
 int     get_next_line(char **line)
 {
     char *buffer;
@@ -122,7 +109,7 @@ int     get_next_line(char **line)
         return (-1);
     if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
         return (-1);
-    while (!check_remains(remains) && count != 0)
+    while (buffer[0] != '\n' && count != 0)
     {
         if ((count = read(fd, buffer, BUFFER_SIZE)) == (-1))
             return (-1);
