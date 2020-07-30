@@ -1,137 +1,23 @@
 #include <stdio.h>
 
-int ft_printf(char const *format, ...);
+int ft_printf(char *str, ...);
 
-int 	main(void)
+int main(void)
 {
-    int res_1;
-    int res_2;
-
-//STR   
-    res_2 = printf("%10.2s\n", "toto");
-    res_1 = ft_printf("%10.2s\n", "toto");
-    if (res_1 != res_2)
-        printf("1)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_2 = printf("%2.2s\n", "toto");
-    res_1 = ft_printf("%2.2s\n", "toto");
-    if (res_1 != res_2)
-        printf("2)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_2 = printf("%2.20s\n", "toto");
-    res_1 = ft_printf("%2.20s\n", "toto");
-    if (res_1 != res_2)
-        printf("3)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_2 = printf("%20.20s\n", "toto");
-    res_1 = ft_printf("%20.20s\n", "toto");
-    if (res_1 != res_2)
-        printf("4)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-
-    res_2 = printf("%.2s\n", "toto");
-    res_1 = ft_printf("%.2s\n", "toto");
-    if (res_1 != res_2)
-        printf("5)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_2 = printf("%.20s\n", "toto");
-    res_1 = ft_printf("%.20s\n", "toto");
-    if (res_1 != res_2)
-        printf("6)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-
-    res_2 = printf("%12s\n", "toto");
-    res_1 = ft_printf("%12s\n", "toto");
-    if (res_1 != res_2)
-        printf("7)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_2 = printf("%2s\n", "toto");
-    res_1 = ft_printf("%2s\n", "toto");
-    if (res_1 != res_2)
-        printf("8)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-
-    res_2 = printf("%s\n", "toto");
-    res_1 = ft_printf("%s\n", "toto");
-    if (res_1 != res_2)
-        printf("9)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-//INT
-    res_1 = ft_printf("Magic %s is %15d\n", "number", 42);
-    res_2 = printf("Magic %s is %15d\n", "number", 42);
-    if (res_1 != res_2)
-        printf("1)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_1 = ft_printf("Magic %s is %1d\n", "number", 42);
-    res_2 = printf("Magic %s is %1d\n", "number", 42);
-    if (res_1 != res_2)
-        printf("2)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-
-    res_1 = ft_printf("Magic %s is %15.2d\n", "number", 42);
-    res_2 = printf("Magic %s is %15.2d\n", "number", 42);
-    if (res_1 != res_2)
-        printf("3)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_1 = ft_printf("Magic %s is %15.20d\n", "number", 42);
-    res_2 = printf("Magic %s is %15.20d\n", "number", 42);
-    if (res_1 != res_2)
-        printf("4)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-
-    res_1 = ft_printf("Magic %s is %.20d\n", "number", 42);
-    res_2 = printf("Magic %s is %.20d\n", "number", 42);
-    if (res_1 != res_2)
-        printf("5)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_1 = ft_printf("Magic %s is %.2d\n", "number", 42);
-    res_2 = printf("Magic %s is %.2d\n", "number", 42);
-    if (res_1 != res_2)
-        printf("6)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_1 = ft_printf("Magic %s is %d\n", "number", 42);
-    res_2 = printf("Magic %s is %d\n", "number", 42);
-    if (res_1 != res_2)
-        printf("7)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-// HEX
-    res_1 = ft_printf("Hexadecimal for %d is %x\n", 42, 42);
-    res_2 = printf("Hexadecimal for %d is %x\n", 42, 42);
-    if (res_1 != res_2)
-        printf("1)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_1 = ft_printf("Hexadecimal for %d is %20x\n", 42, 42);
-    res_2 = printf("Hexadecimal for %d is %20x\n", 42, 42);
-    if (res_1 != res_2)
-        printf("2)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_1 = ft_printf("Hexadecimal for %d is %1x\n", 42, 42);
-    res_2 = printf("Hexadecimal for %d is %1x\n", 42, 42);
-    if (res_1 != res_2)
-        printf("3)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_1 = ft_printf("Hexadecimal for %d is %1.1x\n", 42, 42);
-    res_2 = printf("Hexadecimal for %d is %1.1x\n", 42, 42);
-    if (res_1 != res_2)
-        printf("4)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-    res_1 = ft_printf("Hexadecimal for %d is %10.1x\n", 42, 42);
-    res_2 = printf("Hexadecimal for %d is %10.1x\n", 42, 42);
-    if (res_1 != res_2)
-        printf("5)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-    
-     res_1 = ft_printf("Hexadecimal for %d is %.1x\n", 42, 42);
-    res_2 = printf("Hexadecimal for %d is %.1x\n", 42, 42);
-    if (res_1 != res_2)
-        printf("6)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-      res_1 = ft_printf("Hexadecimal for %d is %.10x\n", 42, 42);
-    res_2 = printf("Hexadecimal for %d is %.10x\n", 42, 42);
-    if (res_1 != res_2)
-        printf("7)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
-
-       res_1 = ft_printf("Hexadecimal for %d is %10.10x\n", 42, 42);
-    res_2 = printf("Hexadecimal for %d is %10.10x\n", 42, 42);
-    if (res_1 != res_2)
-        printf("8)===============ERROR===============\n\nprintf: %d\nft_printf: %d\n\n", res_2, res_1);
+	char *str = "Hell Old";
+	
+	printf("%d\n", ft_printf("%s : %20s : %2s : %.20s : %.2s : %20.2s : %20.20s : %2.20s : %20.11s\n", str, str, str, str, str, str, str, str, str));
+	printf("%d\n", printf("%s : %20s : %2s : %.20s : %.2s : %20.2s : %20.20s : %2.20s : %20.11s\n", str, str, str, str, str, str, str, str, str));
+	int i = 1234456789;
+	int j = -123456789;
+	printf("%d\n", ft_printf("%d : %20d : %2d : %.20d : %.2d : %20.2d : %20.20d : %2.20d : %20.11d\n", j, j, j, j, j, j, j, j, j));
+	printf("%d\n", printf("%d : %20d : %2d : %.20d : %.2d : %20.2d : %20.20d : %2.20d : %20.11d\n", j, j, j, j, j, j, j, j, j));
+	printf("%d\n", ft_printf("%d - %20d - %2d - %.20d - %.2d - %20.2d - %20.20d - %2.20d - %20.11d\n", i, i, i, i, i, i, i, i, i));
+	printf("%d\n", printf("%d - %20d - %2d - %.20d - %.2d - %20.2d - %20.20d - %2.20d - %20.11d\n", i, i, i, i, i, i, i, i, i));
+	
+	printf("%d\n", ft_printf("%x : %20x : %2x : %.20x : %.2x : %20.2x : %20.20x : %2.20x : %20.11x\n", j, j, j, j, j, j, j, j, j));
+	printf("%d\n", printf("%x : %20x : %2x : %.20x : %.2x : %20.2x : %20.20x : %2.20x : %20.11x\n", j, j, j, j, j, j, j, j, j));
+	printf("%d\n", ft_printf("%x - %20x - %2x - %.20x - %.2x - %20.2x - %20.20x - %2.20x - %20.11x\n", i, i, i, i, i, i, i, i, i));
+	printf("%d\n", printf("%x - %20x - %2x - %.20x - %.2x - %20.2x - %20.20x - %2.20x - %20.11x\n", i, i, i, i, i, i, i, i, i));
+	return (0);
 }
