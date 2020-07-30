@@ -4,8 +4,8 @@ int ft_printf(char *str, ...);
 
 int main(void)
 {
-	int i = 1234456789;
-	int j = -123456789;
+	int i = 0;
+	int j = 0;
 	char *str = "Hell Old";
 	printf("\n\nTEST %%s\n\n");
 	printf("%d\n", ft_printf("%s : %20s : %2s : %.20s : %.2s : %20.2s : %20.20s : %2.20s : %20.11s\n", str, str, str, str, str, str, str, str, str));

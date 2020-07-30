@@ -49,6 +49,8 @@ int check_size(int number)
 	unsigned int num;
 	int count = 0;
 
+	if (number == 0)
+		return (1);
 	if (number < 0)
 	{
 		count++;
@@ -80,6 +82,11 @@ char *get_num(int number, int size)
 
 	str = (char *)malloc(sizeof(char) * (size + 1));
 	str[size] = '\0';
+	if (number == 0)
+	{
+		str[0] = '0';
+		return (str);
+	}
 	if (number < 0)
 		num = number * (-1);
 	else
@@ -166,7 +173,7 @@ int check_long(unsigned long long number)
 	return (count);
 }
 
-char *get_long(unsigned long long number)
+char *get_long(unsigned int number)
 {
 	char *str;
 	int size;
@@ -175,6 +182,11 @@ char *get_long(unsigned long long number)
 	size = check_long(number);
 	str = (char *)malloc(sizeof(char) * (size + 1));
 	str[size] = '\0';
+	if (number == 0)
+	{
+		str[0] = '0';
+		return (str);
+	}
 	while (--size > 0)
 	{
 		str[size] = array_hex[number % 16];
@@ -190,9 +202,9 @@ int print_xxx(t_list flags, va_list value)
 	int count = 0;
 	int size;
 	char *str;
-	unsigned long long number;
+	unsigned int number;
 
-	number = va_arg(value, unsigned long long);
+	number = va_arg(value, unsigned int);
 	str = get_long(number);
 	size = ft_strlen(str);
 	count += print_width(flags.width - ((flags.precis > size) ? flags.precis : size), ' ');
