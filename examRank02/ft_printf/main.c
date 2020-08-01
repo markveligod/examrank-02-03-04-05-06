@@ -53,7 +53,7 @@ int main(void)
 
 
 	printf("\n\nTEST %%d\n\n");
-	int num = 2147483647;
+	int num = 0;
 	printf("\n___TEST %%d___\n");
 	printf("No original - %d\n", ft_printf("|%d|\n", num));
 	printf("Original - %d\n", printf("|%d|\n", num));
@@ -99,7 +99,7 @@ int main(void)
 	printf("Original - %d\n", printf("|%.d|\n", num));
 
 	printf("\n\nTEST %%x\n\n");
-	unsigned int un = 0;
+	unsigned int un = 4294967295;
 	printf("\n___TEST %%x___\n");
 	printf("No original - %d\n", ft_printf("|%x|\n", un));
 	printf("Original - %d\n", printf("|%x|\n", un));
