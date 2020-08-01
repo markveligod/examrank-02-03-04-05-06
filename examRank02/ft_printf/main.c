@@ -4,25 +4,146 @@ int ft_printf(char *str, ...);
 
 int main(void)
 {
-	int i = 0;
-	int j = 0;
-	char *str = "Hell Old";
+	char *str = NULL;
 	printf("\n\nTEST %%s\n\n");
-	printf("%d\n", ft_printf("%s : %20s : %2s : %.20s : %.2s : %20.2s : %20.20s : %2.20s : %20.11s\n", str, str, str, str, str, str, str, str, str));
-	printf("%d\n", printf("%s : %20s : %2s : %.20s : %.2s : %20.2s : %20.20s : %2.20s : %20.11s\n", str, str, str, str, str, str, str, str, str));
+	printf("\n___TEST %%s___\n");
+	printf("No original - %d\n", ft_printf("|%s|\n", str));
+	printf("Original - %d\n", printf("|%s|\n", str));
+
+	printf("\n___TEST %%ss___\n");
+	printf("No original - %d\n", ft_printf("|%ss|\n", str));
+	printf("Original - %d\n", printf("|%ss|\n", str));
+
+	printf("\n___TEST %%20s___\n");
+	printf("No original - %d\n", ft_printf("|%20s|\n", str));
+	printf("Original - %d\n", printf("|%20s|\n", str));
+
+	printf("\n___TEST %%2s___\n");
+	printf("No original - %d\n", ft_printf("|%2s|\n", str));
+	printf("Original - %d\n", printf("|%2s|\n", str));
+
+	printf("\n___TEST %%.2s___\n");
+	printf("No original - %d\n", ft_printf("|%.2s|\n", str));
+	printf("Original - %d\n", printf("|%.2s|\n", str));
+
+	printf("\n___TEST %%.20s___\n");
+	printf("No original - %d\n", ft_printf("|%.20s|\n", str));
+	printf("Original - %d\n", printf("|%.20s|\n", str));
+
+	printf("\n___TEST %%2.20s___\n");
+	printf("No original - %d\n", ft_printf("|%2.20s|\n", str));
+	printf("Original - %d\n", printf("|%2.20s|\n", str));
+
+	printf("\n___TEST %%22.20s___\n");
+	printf("No original - %d\n", ft_printf("|%22.20s|\n", str));
+	printf("Original - %d\n", printf("|%22.20s|\n", str));
+
+	printf("\n___TEST %%12.20s___\n");
+	printf("No original - %d\n", ft_printf("|%12.20s|\n", str));
+	printf("Original - %d\n", printf("|%12.20s|\n", str));
+
+	printf("\n___TEST %%12.s___\n");
+	printf("No original - %d\n", ft_printf("|%12.s|\n", str));
+	printf("Original - %d\n", printf("|%12.s|\n", str));
+
+	printf("\n___TEST %%.s___\n");
+	printf("No original - %d\n", ft_printf("|%.s|\n", str));
+	printf("Original - %d\n", printf("|%.s|\n", str));
+
+
+
 	printf("\n\nTEST %%d\n\n");
-	printf("%d\n", ft_printf("%d : %20d : %2d : %.20d : %.2d : %20.2d : %20.20d : %2.20d : %20.11d\n", j, j, j, j, j, j, j, j, j));
-	printf("%d\n", printf("%d : %20d : %2d : %.20d : %.2d : %20.2d : %20.20d : %2.20d : %20.11d\n", j, j, j, j, j, j, j, j, j));
-	printf("%d\n", ft_printf("%d : %20d : %2d : %.20d : %.2d : %20.2d : %20.20d : %2.20d : %20.11d\n", i, i, i, i, i, i, i, i, i));
-	printf("%d\n", printf("%d : %20d : %2d : %.20d : %.2d : %20.2d : %20.20d : %2.20d : %20.11d\n", i, i, i, i, i, i, i, i, i));
+	int num = 2147483647;
+	printf("\n___TEST %%d___\n");
+	printf("No original - %d\n", ft_printf("|%d|\n", num));
+	printf("Original - %d\n", printf("|%d|\n", num));
+
+	printf("\n___TEST %%dd___\n");
+	printf("No original - %d\n", ft_printf("|%dd|\n", num));
+	printf("Original - %d\n", printf("|%dd|\n", num));
+
+	printf("\n___TEST %%20d___\n");
+	printf("No original - %d\n", ft_printf("|%20d|\n", num));
+	printf("Original - %d\n", printf("|%20d|\n", num));
+
+	printf("\n___TEST %%2d___\n");
+	printf("No original - %d\n", ft_printf("|%2d|\n", num));
+	printf("Original - %d\n", printf("|%2d|\n", num));
+
+	printf("\n___TEST %%.2d___\n");
+	printf("No original - %d\n", ft_printf("|%.2d|\n", num));
+	printf("Original - %d\n", printf("|%.2d|\n", num));
+
+	printf("\n___TEST %%.20d___\n");
+	printf("No original - %d\n", ft_printf("|%.20d|\n", num));
+	printf("Original - %d\n", printf("|%.20d|\n", num));
+
+	printf("\n___TEST %%2.20s___\n");
+	printf("No original - %d\n", ft_printf("|%2.20d|\n", num));
+	printf("Original - %d\n", printf("|%2.20d|\n", num));
+
+	printf("\n___TEST %%22.20d___\n");
+	printf("No original - %d\n", ft_printf("|%22.20d|\n", num));
+	printf("Original - %d\n", printf("|%22.20d|\n", num));
+
+	printf("\n___TEST %%12.20d___\n");
+	printf("No original - %d\n", ft_printf("|%12.20d|\n", num));
+	printf("Original - %d\n", printf("|%12.20d|\n", num));
+
+	printf("\n___TEST %%12.d___\n");
+	printf("No original - %d\n", ft_printf("|%12.d|\n", num));
+	printf("Original - %d\n", printf("|%12.d|\n", num));
+
+	printf("\n___TEST %%.d___\n");
+	printf("No original - %d\n", ft_printf("|%.d|\n", num));
+	printf("Original - %d\n", printf("|%.d|\n", num));
+
 	printf("\n\nTEST %%x\n\n");
-	printf("%d\n", ft_printf("%x : %20x : %2x : %.20x : %.2x\n", j, j, j, j, j));
-	printf("%d\n", printf("%x : %20x : %2x : %.20x : %.2x\n", j, j, j, j, j));
-	printf("%d\n", ft_printf(" %20.20x : %2.20x : %20.11x : %20.2x\n", j, j, j, j));
-	printf("%d\n", printf(" %20.20x : %2.20x : %20.11x : %20.2x\n", j, j, j, j));
-	printf("%d\n", ft_printf("%x : %20x : %2x : %.20x : %.2x\n", i, i, i, i, i));
-	printf("%d\n", printf("%x : %20x : %2x : %.20x : %.2x\n", i, i, i, i, i));
-	printf("%d\n", ft_printf(" %20.20x : %2.20x : %20.11x : %20.2x\n", i, i, i, i));
-	printf("%d\n", printf(" %20.20x : %2.20x : %20.11x : %20.2x\n", i, i, i, i));
+	unsigned int un = 0;
+	printf("\n___TEST %%x___\n");
+	printf("No original - %d\n", ft_printf("|%x|\n", un));
+	printf("Original - %d\n", printf("|%x|\n", un));
+
+	printf("\n___TEST %%xx___\n");
+	printf("No original - %d\n", ft_printf("|%xx|\n", un));
+	printf("Original - %d\n", printf("|%xx|\n", un));
+
+	printf("\n___TEST %%20x___\n");
+	printf("No original - %d\n", ft_printf("|%20x|\n", un));
+	printf("Original - %d\n", printf("|%20x|\n", un));
+
+	printf("\n___TEST %%2x___\n");
+	printf("No original - %d\n", ft_printf("|%2x|\n", un));
+	printf("Original - %d\n", printf("|%2x|\n", un));
+
+	printf("\n___TEST %%.2x___\n");
+	printf("No original - %d\n", ft_printf("|%.2x|\n", un));
+	printf("Original - %d\n", printf("|%.2x|\n", un));
+
+	printf("\n___TEST %%.20x___\n");
+	printf("No original - %d\n", ft_printf("|%.20x|\n", un));
+	printf("Original - %d\n", printf("|%.20x|\n", un));
+
+	printf("\n___TEST %%2.20x___\n");
+	printf("No original - %d\n", ft_printf("|%2.20x|\n", un));
+	printf("Original - %d\n", printf("|%2.20x|\n", un));
+
+	printf("\n___TEST %%22.20x___\n");
+	printf("No original - %d\n", ft_printf("|%22.20x|\n", un));
+	printf("Original - %d\n", printf("|%22.20x|\n", un));
+
+	printf("\n___TEST %%12.20x___\n");
+	printf("No original - %d\n", ft_printf("|%12.20x|\n", un));
+	printf("Original - %d\n", printf("|%12.20x|\n", un));
+
+	printf("\n___TEST %%12.x___\n");
+	printf("No original - %d\n", ft_printf("|%12.x|\n", un));
+	printf("Original - %d\n", printf("|%12.x|\n", un));
+
+	printf("\n___TEST %%.x___\n");
+	printf("No original - %d\n", ft_printf("|%.x|\n", un));
+	printf("Original - %d\n", printf("|%.x|\n", un));
+
+
 	return (0);
 }

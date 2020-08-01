@@ -137,6 +137,8 @@ int print_int(t_list flags, va_list value)
 	number = va_arg(value, int);
 	size = check_size(number);
 	str = get_num(number, size);
+	if (flags.precis == 0 && flags.point == 1 && number == 0)
+		str[0] = ' ';
 	size = ft_strlen(str);
 	if (number < 0)
 		size--;
@@ -145,6 +147,7 @@ int print_int(t_list flags, va_list value)
 		count += print_width(1, '-');
 	count += print_width(flags.precis - size, '0');
 	count += ft_putstr(((number < 0) ? &str[1] : &str[0]), size);
+	free(str);
 	return (count);
 }
 
@@ -155,6 +158,10 @@ int print_str(t_list flags, va_list value)
 	int count = 0;
 
 	str = va_arg(value, char *);
+	if (!str)
+		str = "(null)";
+	if (flags.precis == 0 && flags.point == 1)
+		str = "";
 	size = ft_strlen(str);
 	count += print_width(flags.width - ((flags.precis > 0 && flags.precis < size) ? flags.precis : size), ' ');
 	count += ft_putstr(str, ((flags.precis > 0 && flags.precis < size) ? flags.precis : size));
@@ -206,10 +213,13 @@ int print_xxx(t_list flags, va_list value)
 
 	number = va_arg(value, unsigned int);
 	str = get_long(number);
+	if (flags.precis == 0 && flags.point == 1 && number == 0)
+		str[0] = ' ';
 	size = ft_strlen(str);
 	count += print_width(flags.width - ((flags.precis > size) ? flags.precis : size), ' ');
 	count += print_width(flags.precis - size, '0');
 	count += ft_putstr(str, size);
+	free(str);
 	return (count);
 }
 
