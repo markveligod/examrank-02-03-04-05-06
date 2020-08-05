@@ -50,6 +50,14 @@ int main(void)
 	printf("No original - %d\n", ft_printf("|%.s|\n", str));
 	printf("Original - %d\n", printf("|%.s|\n", str));
 
+	printf("\n___TEST %%20.s___\n");
+	printf("No original - %d\n", ft_printf("|%20.s|\n", str));
+	printf("Original - %d\n", printf("|%20.s|\n", str));
+
+	printf("\n___TEST %%2.s___\n");
+	printf("No original - %d\n", ft_printf("|%2.s|\n", str));
+	printf("Original - %d\n", printf("|%2.s|\n", str));
+
 
 
 	printf("\n\nTEST %%d\n\n");
@@ -98,8 +106,16 @@ int main(void)
 	printf("No original - %d\n", ft_printf("|%.d|\n", num));
 	printf("Original - %d\n", printf("|%.d|\n", num));
 
+	printf("\n___TEST %%20.d___\n");
+	printf("No original - %d\n", ft_printf("|%20.d|\n", num));
+	printf("Original - %d\n", printf("|%20.d|\n", num));
+
+	printf("\n___TEST %%2.d___\n");
+	printf("No original - %d\n", ft_printf("|%2.d|\n", num));
+	printf("Original - %d\n", printf("|%2.d|\n", num));
+
 	printf("\n\nTEST %%x\n\n");
-	unsigned int un = 4294967295;
+	unsigned int un = 0;
 	printf("\n___TEST %%x___\n");
 	printf("No original - %d\n", ft_printf("|%x|\n", un));
 	printf("Original - %d\n", printf("|%x|\n", un));
@@ -144,6 +160,13 @@ int main(void)
 	printf("No original - %d\n", ft_printf("|%.x|\n", un));
 	printf("Original - %d\n", printf("|%.x|\n", un));
 
+	printf("\n___TEST %%20.x___\n");
+	printf("No original - %d\n", ft_printf("|%20.x|\n", un));
+	printf("Original - %d\n", printf("|%20.x|\n", un));
+
+	printf("\n___TEST %%2.x___\n");
+	printf("No original - %d\n", ft_printf("|%2.x|\n", un));
+	printf("Original - %d\n", printf("|%2.x|\n", un));
 
 	return (0);
 }
