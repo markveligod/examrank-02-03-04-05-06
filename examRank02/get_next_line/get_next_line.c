@@ -98,7 +98,7 @@ char    *cut_next_line(char *remains)
 
 int     get_next_line(char **line)
 {
-    char *buffer;
+    char buffer[BUFFER_SIZE + 1];
     static char *remains;
     int count;
     int fd;
@@ -107,8 +107,6 @@ int     get_next_line(char **line)
     fd = 0;
     if (!line)
         return (-1);
-    if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-        return (-1);
     while (buffer[0] != '\n' && count != 0)
     {
         if ((count = read(fd, buffer, BUFFER_SIZE)) == (-1))
@@ -116,8 +114,9 @@ int     get_next_line(char **line)
         buffer[count] = '\0';
         remains = ft_strjoin(remains, buffer);
     }
-    free(buffer);
     *line = push_line(remains);
     remains = cut_next_line(remains);
+    if (count == 0)
+        free(remains);
     return((count == 0) ? 0 : 1);
 }
