@@ -116,7 +116,5 @@ int     get_next_line(char **line)
     }
     *line = push_line(remains);
     remains = cut_next_line(remains);
-    if (count == 0)
-        free(remains);
     return((count == 0) ? 0 : 1);
 }
