@@ -9,14 +9,6 @@ typedef struct s_zone
     char backgrond;
 } t_zone;
 
-t_zone init_zone(t_zone zone)
-{
-    zone.width = 0;
-    zone.height = 0;
-    zone.backgrond = 0;
-    return (zone);
-}
-
 typedef struct s_list
 {
 	char	type;
@@ -38,10 +30,10 @@ int ft_strlen(char *str)
     return (i);
 }
 
-int fail(int error, char *str)
+int fail(char *str)
 {
     write(1, str, ft_strlen(str));
-    return (error);
+    return (1);
 }
 
 int free_all(FILE *file, char *draw)
@@ -52,35 +44,25 @@ int free_all(FILE *file, char *draw)
     return (1);
 }
 
-
-
 int check_zone(t_zone *zone)
 {
     return ((zone->width >= 0 && zone->width <= 300) && (zone->height >= 0 && zone->height <= 300));
 }
 
-int get_zone(FILE *file, t_zone *zone)
+char *get_zone(FILE *file, t_zone *zone)
 {
     int count;
+    char *array;
+    int i = 0;
 
     if ((count = fscanf(file, "%d %d %c\n", &zone->width, &zone->height, &zone->backgrond)) != 3)
-        return (0);
+        return (NULL);
     if (count == (-1))
-        return (0);
+        return (NULL);
     if (!(check_zone(zone)))
-        return (0);
-    return (1);
-}
-
-char *get_background(t_zone *zone)
-{
-    int size = zone->height * zone->width;
-    int i = 0;
-    char *array;
-
-    array = (char *)malloc(sizeof(char) * (size + 1));
-    array[size] = '\0';
-    while (i < size)
+        return (NULL);
+    array = (char *)malloc(sizeof(char) * (zone->width * zone->height));
+    while (i < zone->width * zone->height)
     {
         array[i] = zone->backgrond;
         i++;
@@ -155,18 +137,16 @@ int main(int ac, char **av)
 {
     FILE *file;
     char *draw;
-    t_zone zone = init_zone(zone);
+    t_zone zone;
 
     if (ac != 2)
-        return (fail(1, "Error: argument\n"));
+        return (fail("Error: argument\n"));
     if (!(file = fopen(av[1], "r")))
-        return (fail(1, "Error: Operation file corrupted\n"));
-    if (!(get_zone(file, &zone)))
-        return (free_all(file, NULL) && fail(1, "Error: Operation file corrupted\n"));
-    if (!(draw = get_background(&zone)))
-        return (free_all(file, NULL) && fail(1, "Error: allocate memomry fail (-_-)\n"));
+        return (fail("Error: Operation file corrupted\n"));
+    if (!(draw = get_zone(file, &zone)))
+        return (free_all(file, NULL) && fail("Error: Operation file corrupted\n"));
     if (!(drawing(file, &draw, &zone)))
-        return (free_all(file, draw) && fail(1, "Error: Operation file corrupted\n"));
+        return (free_all(file, draw) && fail("Error: Operation file corrupted\n"));
     print_draw(draw, &zone);
     free_all(file, draw);
     return (0);
