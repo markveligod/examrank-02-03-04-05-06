@@ -1,5 +1,5 @@
 # :black_square_button: EXAM (project 2020)
-The first exam of the new cursus.  
+Exams of the new graph.  
 Subjects are in the folder of each exercises, along with a solution and a test file.  
 At the same time, I have presented the code as a sample for solving each of the functions.if you find any bug, write to "issues".  
 ## :white_check_mark: Exam Rank 02  
@@ -21,6 +21,10 @@ Original link to the subjects repository: [click](https://github.com/Glagan/42-e
 |:-----:|-------------|-------------------|:-------------------:|
 | micro_paint |Write a program that will read an "operation file" and print the result in the terminal (rectangle)|fopen, fread, fscanf, fclose, write, malloc, calloc, realloc, free, memset, powf, sqrtf|:star::star::star:|
 | mini_paint |Write a program that will read an "operation file" and print the result in the terminal (circle)|fopen, fread, fscanf, fclose, write, malloc, calloc, realloc, free, memset, powf, sqrtf|:star::star::star:|
+
+### Running tests
+![](https://github.com/markveligod/exam/raw/master/examRank03/img/micro.gif)
+![](https://github.com/markveligod/exam/raw/master/examRank03/img/mini.gif)
 
 ## :black_square_button: Exam Rank 04
 (very soon)
