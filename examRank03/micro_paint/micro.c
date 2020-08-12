@@ -87,21 +87,21 @@ int is_rec(float y, float x, t_list *tmp)
 
 void get_draw(char **draw, t_list *tmp, t_zone *zone)
 {
-    int i, j;
+    int x, y;
     int rec;
 
-    i = 0;
-    while (i < zone->height)
+    y = 0;
+    while (y < zone->height)
     {
-        j = 0;
-        while (j < zone->width)
+        x = 0;
+        while (x < zone->width)
         {
-            rec = is_rec(i, j, tmp);
+            rec = is_rec(y, x, tmp);
             if ((tmp->type == 'r' && rec == 2) || (tmp->type == 'R' && rec))
-                (*draw)[(i * zone->width) + j] = tmp->color;
-            j++;
+                (*draw)[(y * zone->width) + x] = tmp->color;
+            x++;
         }
-        i++;
+        y++;
     }
 }
 

@@ -19,14 +19,6 @@ typedef struct s_list
     char color;
 } t_list;
 
-t_zone init_struct(t_zone zone)
-{
-    zone.width = 0;
-    zone.height = 0;
-    zone.background = 0;
-    return (zone);
-}
-
 int ft_strlen(char *str)
 {
     int i = 0;
