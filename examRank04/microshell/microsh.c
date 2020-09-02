@@ -1,17 +1,11 @@
-#include <stdio.h> //del
+#include <stdio.h> //delete
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define SIDE_OUT	0
-#define SIDE_IN		1
-
-#define STDIN		0
-#define STDOUT		1
 #define STDERR		2
-
 #define TYPE_END	0
 #define TYPE_PIPE	1
 #define TYPE_BREAK	2
@@ -56,7 +50,7 @@ void exit_cd_1(void)
 
 void exit_cd_2(char *str)
 {
-    write(STDERR, "error: cd: cannot change directory to ", 40);
+    write(STDERR, "error: cd: cannot change directory to ", 38);
     write(STDERR, str, ft_strlen(str));
     write(STDERR, "\n", 1);
     exit(EXIT_FAILURE);
@@ -137,7 +131,7 @@ void cd_cmd(t_base *temp)
         exit(EXIT_FAILURE);
     }
     ret = chdir(temp->argv[1]);
-    if (ret < 0)
+    if (ret == -1)
     {
         exit_cd_2(temp->argv[1]);
         exit(EXIT_FAILURE);
@@ -182,13 +176,13 @@ void exec_cmd_pipe(t_base *temp, char **env, int size)
                     exit(EXIT_FAILURE);
                 }
             }
-            else
-                cd_cmd(temp);
             exit(EXIT_SUCCESS);
         }
         else //parent
         {
             waitpid(pid, &status, WUNTRACED);
+            if (strcmp(temp->argv[0], "cd") == 0)
+                cd_cmd(temp);
             close(prev_pipe);
 		    close(fd[1]);
 		    prev_pipe = fd[0];
@@ -221,12 +215,15 @@ void exec_cmd(t_base *temp, char **env)
                 exit(EXIT_FAILURE);
             }
         }
-        else
-            cd_cmd(temp);
         exit(EXIT_SUCCESS);
     }
     else //parent
+    {
         waitpid(pid, &status, WUNTRACED);
+        if (strcmp(temp->argv[0], "cd") == 0)
+            cd_cmd(temp);
+    }
+
 }
 
 void sort_cmd(t_base *ptr, char **env)
@@ -259,6 +256,27 @@ void sort_cmd(t_base *ptr, char **env)
     
 }
 
+void clear_leaks(t_base *ptr)
+{
+    t_base *temp;
+    int i;
+
+    while (ptr)
+    {
+        temp = ptr->next;
+        i = 0;
+        while (ptr->argv[i] != NULL)
+        {
+            free(ptr->argv[i]);
+            i++;
+        }
+        free(ptr->argv);
+        ptr->next = NULL;
+        free(ptr);
+        ptr = temp;
+    }
+}
+
 int main(int ac, char **av, char **env)
 {
     t_base *ptr = NULL;
@@ -276,8 +294,8 @@ int main(int ac, char **av, char **env)
     }
     if (ptr)
         sort_cmd(ptr, env);
-
-/*
+    clear_leaks(ptr);
+/* (test parsing)
     while (ptr)
     {
         printf("-------------------\n");
