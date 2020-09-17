@@ -5,69 +5,93 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#define STDIN		0
+#define STDOUT		1
 #define STDERR		2
-#define TYPE_END	0
-#define TYPE_PIPE	1
-#define TYPE_BREAK	2
+
+#define TYPE_END	3
+#define TYPE_PIPE	4
+#define TYPE_BREAK	5
 
 typedef struct s_base
 {
     char **argv;
     int size;
 	int type;
+	int fd[2];
+	struct s_base *prev;
     struct s_base *next;
 } t_base;
 
-int ft_strlen(char const *str)
-{
-	int	i;
+/*
+**====================================
+**============Part utils==============
+**====================================
+*/
 
-	i = 0;
+int ft_strlen(char *str)
+{
+	int i = 0;
+
+	if (!str)
+		return (0);
 	while (str[i])
 		i++;
 	return (i);
 }
 
+char *ft_strdup(char *str)
+{
+	int size = ft_strlen(str);
+	char *new;
+
+	if (!(new = (char *)malloc(sizeof(char) * (size + 1))))
+		return (NULL);
+	new[size] = '\0';
+	while (--size >= 0)
+		new[size] = str[size];
+	return (new);
+}
+
+/*
+**====================================
+**============Part error==============
+**====================================
+*/
+
 void exit_fatal(void)
 {
-    write(STDERR, "error: fatal\n", 13);
-    exit(EXIT_FAILURE);
+	write(STDERR, "error: fatal\n", ft_strlen("error: fatal\n"));
+	exit(EXIT_FAILURE);
 }
 
 void exit_execve(char *str)
 {
-    write(STDERR, "error: cannot execute ", 22);
-    write(STDERR, str, ft_strlen(str));
-    write(STDERR, "\n", 1);
-    exit(EXIT_FAILURE);
+	write(STDERR, "error: cannot execute ", ft_strlen("error: cannot execute "));
+	write(STDERR, str, ft_strlen(str));
+	write(STDERR, "\n", 1);
+	exit(EXIT_FAILURE);
 }
 
-void exit_cd_1(void)
+int exit_cd_1()
 {
-    write(STDERR, "error: cd: bad arguments\n", 25);
-    exit(EXIT_FAILURE);
+	write(STDERR, "error: cd: bad arguments\n", ft_strlen("error: cd: bad arguments\n"));
+	return (EXIT_FAILURE);
 }
 
-void exit_cd_2(char *str)
+int exit_cd_2(char *str)
 {
-    write(STDERR, "error: cd: cannot change directory to ", 38);
-    write(STDERR, str, ft_strlen(str));
-    write(STDERR, "\n", 1);
-    exit(EXIT_FAILURE);
+	write(STDERR, "error: cd: cannot change directory to ", ft_strlen("error: cd: cannot change directory to "));
+	write(STDERR, str, ft_strlen(str));
+	write(STDERR, "\n", 1);
+	return (EXIT_FAILURE);
 }
 
-char *ft_strdup(char *str)
-{
-    char *new;
-    int size = ft_strlen(str);
-
-    if (!(new = (char *)malloc(sizeof(char) * (size + 1))))
-        exit_fatal();
-    new[size] = '\0';
-    while (--size >= 0)
-        new[size] = str[size];
-    return (new);
-}
+/*
+**====================================
+**============Part parsing============
+**====================================
+*/
 
 void ft_lstadd_back(t_base **ptr, t_base *new)
 {
@@ -81,6 +105,7 @@ void ft_lstadd_back(t_base **ptr, t_base *new)
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new;
+		new->prev = temp;
 	}
 }
 
@@ -113,6 +138,8 @@ int parser_argv(t_base **ptr, char **av)
     if (!(new->argv = (char **)malloc(sizeof(char *) * (size + 1))))
         exit_fatal();
     new->size = size;
+	new->next = NULL;
+	new->prev = NULL;
     new->argv[size] = NULL;
     while (--size >= 0)
         new->argv[size] = ft_strdup(av[size]);
@@ -121,170 +148,115 @@ int parser_argv(t_base **ptr, char **av)
     return (new->size);
 }
 
-void cd_cmd(t_base *temp)
-{
-    int ret;
+/*
+**====================================
+**============Part execve=============
+**====================================
+*/
 
-    if (temp->size > 2)
-    {
-        exit_cd_1();
-        exit(EXIT_FAILURE);
-    }
-    ret = chdir(temp->argv[1]);
-    if (ret == -1)
-    {
-        exit_cd_2(temp->argv[1]);
-        exit(EXIT_FAILURE);
-    }
+int exec_cmd(t_base *temp, char **env)
+{
+	pid_t pid;
+	int res;
+	int status;
+	int pipe_open;
+
+	res = EXIT_FAILURE;
+	pipe_open = 0;
+	if (temp->type == TYPE_PIPE || (temp->prev && temp->prev->type == TYPE_PIPE))
+	{
+		pipe_open = 1;
+		if (pipe(temp->fd))
+			exit_fatal();
+	}
+	pid = fork();
+	if (pid < 0)
+		exit_fatal();
+	else if (pid == 0) //child
+	{
+		if (temp->type == TYPE_PIPE && dup2(temp->fd[1], STDOUT) < 0)
+			exit_fatal();
+		if (temp->prev && temp->prev->type == TYPE_PIPE && dup2(temp->prev->fd[0], STDIN) < 0)
+			exit_fatal();
+		if ((res = execve(temp->argv[0], temp->argv, env)) < 0)
+			exit_execve(temp->argv[0]);
+		exit(EXIT_SUCCESS);
+	}
+	else //parent
+	{
+		waitpid(pid, &status, 0);
+		if (pipe_open)
+		{
+			close(temp->fd[1]);
+			if (!temp->next || temp->type == TYPE_BREAK)
+				close(temp->fd[0]);
+		}
+		if (temp->prev && temp->prev->type == TYPE_PIPE)
+			close(temp->prev->fd[0]);
+		if (WIFEXITED(status))
+			res = WEXITSTATUS(status);
+	}
+	return (res);
 }
 
-void exec_cmd_pipe(t_base *temp, char **env, int size)
+int exec_cmds(t_base *ptr, char **env)
 {
-    pid_t pid;
-    int status;
-    int fd[2];
-    int prev_pipe;
-    int i = 0;
-    int ret;
+	t_base *temp;
+	int res;
 
-    prev_pipe = dup(STDIN_FILENO);
-    while (i < size)
-    {
-        if (i < size - 1)
-            pipe(fd);
-        pid = fork();
-        if (pid < 0)
-        {
-            exit_fatal();
-            exit(EXIT_FAILURE);
-        }
-        else if (pid == 0) //child
-        {
-            if (prev_pipe != STDIN_FILENO)
-	        {
-        		dup2(prev_pipe, STDIN_FILENO);
-        		close(prev_pipe);
-	        }
-            dup2(fd[1], STDOUT_FILENO);
-	        close(fd[1]);
-            if (strcmp(temp->argv[0], "cd") != 0)
-            {
-                ret = execve(temp->argv[0], temp->argv, env);
-                if (ret < 0)
-                {
-                    exit_execve(temp->argv[0]);
-                    exit(EXIT_FAILURE);
-                }
-            }
-            exit(EXIT_SUCCESS);
-        }
-        else //parent
-        {
-            waitpid(pid, &status, WUNTRACED);
-            if (strcmp(temp->argv[0], "cd") == 0)
-                cd_cmd(temp);
-            close(prev_pipe);
-		    close(fd[1]);
-		    prev_pipe = fd[0];
-            temp = temp->next;
-            i++;
-        }
-    }
+	res = EXIT_SUCCESS;
+	temp = ptr;
+	while (temp)
+	{
+		if (strcmp("cd", temp->argv[0]) == 0)
+		{
+			res = EXIT_SUCCESS;
+			if (temp->size < 2)
+				res = exit_cd_1();
+			else if (chdir(temp->argv[1]))
+				res = exit_cd_2(temp->argv[1]);
+		}
+		else
+			res = exec_cmd(temp, env);
+		temp = temp->next;
+	}
+	return (res);
 }
 
-void exec_cmd(t_base *temp, char **env)
-{
-    pid_t pid;
-    int status;
-    int ret;
-
-    pid = fork();
-    if (pid < 0)
-    {
-        exit_fatal();
-        exit(EXIT_FAILURE);
-    }
-    else if (pid == 0) //child
-    {
-        if (strcmp(temp->argv[0], "cd") != 0)
-        {
-            ret = execve(temp->argv[0], temp->argv, env);
-            if (ret < 0)
-            {
-                exit_execve(temp->argv[0]);
-                exit(EXIT_FAILURE);
-            }
-        }
-        exit(EXIT_SUCCESS);
-    }
-    else //parent
-    {
-        waitpid(pid, &status, WUNTRACED);
-        if (strcmp(temp->argv[0], "cd") == 0)
-            cd_cmd(temp);
-    }
-
-}
-
-void sort_cmd(t_base *ptr, char **env)
-{
-    int size;
-    t_base *temp_1;
-    t_base *temp_2;
-
-    temp_1 = ptr;
-    while (temp_1)
-    {
-        size = 0;
-        if (temp_1 && temp_1->type == 1)
-        {
-            temp_2 = temp_1;
-            while (temp_2 && temp_2->type == 1)
-            {
-                size++;
-                temp_2 = temp_2->next;
-            }
-            exec_cmd_pipe(temp_1, env, ++size);
-            temp_1 = temp_2->next;
-        }
-        else
-        {
-            exec_cmd(temp_1, env);
-            temp_1 = temp_1->next;
-        }
-    }
-    
-}
+/*
+**====================================
+**============Part main===============
+**====================================
+*/
 
 void clear_leaks(t_base *ptr)
 {
-    t_base *temp;
-    int i;
+	t_base *temp;
+	int i;
 
-    while (ptr)
-    {
-        temp = ptr->next;
-        i = 0;
-        while (ptr->argv[i] != NULL)
-        {
-            free(ptr->argv[i]);
-            i++;
-        }
-        free(ptr->argv);
-        ptr->next = NULL;
-        free(ptr);
-        ptr = temp;
-    }
+	while (ptr)
+	{
+		temp = ptr->next;
+		i = 0;
+		while (i < ptr->size)
+			free(ptr->argv[i++]);
+		free(ptr->argv);
+		free(ptr);
+		ptr = temp;
+	}
+	ptr = NULL;
 }
 
 int main(int ac, char **av, char **env)
 {
-    t_base *ptr = NULL;
-    int i;
+	t_base *ptr = NULL;
+	int i;
+	int res;
 
-    (void)ac;
-    i = 1;
-    while (av[i])
+	res = EXIT_SUCCESS;
+	i = 1;
+	(void)ac;
+	while (av[i])
     {
         i += parser_argv(&ptr, &av[i]);
         if (!av[i])
@@ -292,19 +264,21 @@ int main(int ac, char **av, char **env)
         else
             i++;
     }
-    if (ptr)
-        sort_cmd(ptr, env);
-    clear_leaks(ptr);
-/* (test parsing)
-    while (ptr)
-    {
-        printf("-------------------\n");
-        for (i = 0; i < ptr->size; i++)
-            printf("%d - %s\n", i, ptr->argv[i]);
-        printf("TYPE: %d\n", ptr->type);
-        printf("SIZE: %d\n", ptr->size);
-        ptr = ptr->next;
-    }
-*/
-    return (0);
+	/*while (ptr)
+	{
+		
+		printf("=================\n");
+		for (i = 0; i < ptr->size; i++)
+			printf("%s\n", ptr->argv[i]);
+		printf("TYPE: %d\n", ptr->type);
+		printf("SIZE: %d\n", ptr->size);
+		printf("=================\n");
+		ptr = ptr->next;
+	}
+	(void)**env;
+	printf("END\n");*/
+	if (ptr)
+		res = exec_cmds(ptr, env);
+	clear_leaks(ptr);
+	return (res);	
 }

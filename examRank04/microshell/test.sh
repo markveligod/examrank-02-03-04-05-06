@@ -1,10 +1,7 @@
-gcc microsh.c -o microshell -Wall -Wextra -Werror;
-./microshell /bin/ls
-./microshell /bin/ls "|" /usr/bin/grep microshell ";" /bin/echo i love my microshell;
-./microshell /bin/ls "|" /usr/bin/grep microshell
-./microshell /bin/ls "|" /usr/bin/grep microshell "|" /usr/bin/grep micro
+gcc microsh.c -o microshell -Wall -Wextra -Werror
+./microshell "cd" "/bin" ";" "/bin/ls" "|" "/usr/bin/grep" "grub" ";"
+./microshell "/bin/ls" "|" "/usr/bin/grep" "microshell"
 ./microshell /bin/ls "|" /usr/bin/grep microshell "|" /usr/bin/grep micro "|" /usr/bin/grep shell "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep micro "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell "|" /usr/bin/grep shell
-./microshell /bin/ls ewqew "|" /usr/bin/grep micro ";" /bin/echo dernier ";" /bin/echo HELLO WORLD!!!!
-./microshell /bin/ls ";" /bin/echo Hello ";" /bin/echo World ";" /bin/ls "|" /usr/bin/grep micro ";"
-./microshell cd ../ ";" /bin/ls ";"
-./microshell cd /bin ";" /bin/ls "|" /usr/bin/grep lzma ";" /bin/echo HELLO WORLD!!!!
+./microshell blah "|" /bin/echo OK ";"
+./microshell blah "|" /bin/echo OK
+./microshell /bin/cat microsh.c ";" /bin/cat microsh.c "|" /usr/bin/grep a "|" /usr/bin/grep b "|" /usr/bin/grep z ";" /bin/cat microsh.c
