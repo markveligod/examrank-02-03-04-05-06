@@ -45,6 +45,8 @@ char *ft_strdup(char *str)
 	int size = ft_strlen(str);
 	char *new;
 
+	if (!str)
+		return (NULL);
 	if (!(new = (char *)malloc(sizeof(char) * (size + 1))))
 		return (NULL);
 	new[size] = '\0';
@@ -154,14 +156,12 @@ int parser_argv(t_base **ptr, char **av)
 **====================================
 */
 
-int exec_cmd(t_base *temp, char **env)
+void exec_cmd(t_base *temp, char **env)
 {
 	pid_t pid;
-	int res;
 	int status;
 	int pipe_open;
 
-	res = EXIT_FAILURE;
 	pipe_open = 0;
 	if (temp->type == TYPE_PIPE || (temp->prev && temp->prev->type == TYPE_PIPE))
 	{
@@ -178,7 +178,7 @@ int exec_cmd(t_base *temp, char **env)
 			exit_fatal();
 		if (temp->prev && temp->prev->type == TYPE_PIPE && dup2(temp->prev->fd[0], STDIN) < 0)
 			exit_fatal();
-		if ((res = execve(temp->argv[0], temp->argv, env)) < 0)
+		if ((execve(temp->argv[0], temp->argv, env)) < 0)
 			exit_execve(temp->argv[0]);
 		exit(EXIT_SUCCESS);
 	}
@@ -193,34 +193,27 @@ int exec_cmd(t_base *temp, char **env)
 		}
 		if (temp->prev && temp->prev->type == TYPE_PIPE)
 			close(temp->prev->fd[0]);
-		if (WIFEXITED(status))
-			res = WEXITSTATUS(status);
 	}
-	return (res);
 }
 
-int exec_cmds(t_base *ptr, char **env)
+void exec_cmds(t_base *ptr, char **env)
 {
 	t_base *temp;
-	int res;
 
-	res = EXIT_SUCCESS;
 	temp = ptr;
 	while (temp)
 	{
 		if (strcmp("cd", temp->argv[0]) == 0)
 		{
-			res = EXIT_SUCCESS;
 			if (temp->size < 2)
-				res = exit_cd_1();
+				exit_cd_1();
 			else if (chdir(temp->argv[1]))
-				res = exit_cd_2(temp->argv[1]);
+				exit_cd_2(temp->argv[1]);
 		}
 		else
-			res = exec_cmd(temp, env);
+			exec_cmd(temp, env);
 		temp = temp->next;
 	}
-	return (res);
 }
 
 /*
@@ -251,19 +244,18 @@ int main(int ac, char **av, char **env)
 {
 	t_base *ptr = NULL;
 	int i;
-	int res;
 
-	res = EXIT_SUCCESS;
 	i = 1;
-	(void)ac;
-	while (av[i])
-    {
-        i += parser_argv(&ptr, &av[i]);
-        if (!av[i])
-            break;
-        else
-            i++;
-    }
+	if (ac > 1)
+	{
+		while (av[i])
+    	{
+    	    i += parser_argv(&ptr, &av[i]);
+    	    if (!av[i])
+    	        break;
+    	    else
+    	        i++;
+    	}
 	/*while (ptr)
 	{
 		
@@ -277,8 +269,9 @@ int main(int ac, char **av, char **env)
 	}
 	(void)**env;
 	printf("END\n");*/
-	if (ptr)
-		res = exec_cmds(ptr, env);
-	clear_leaks(ptr);
-	return (res);	
+		if (ptr)
+			exec_cmds(ptr, env);
+		clear_leaks(ptr);
+	}
+	return (0);
 }
