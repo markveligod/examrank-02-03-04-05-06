@@ -250,6 +250,11 @@ int main(int ac, char **av, char **env)
 	{
 		while (av[i])
     	{
+            if (strcmp(av[i], ";") == 0)
+            {
+                i++;
+                continue ;
+            }
     	    i += parser_argv(&ptr, &av[i]);
     	    if (!av[i])
     	        break;
