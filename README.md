@@ -26,5 +26,17 @@ Original link to the subjects repository: [click](https://github.com/Glagan/42-e
 ![](https://github.com/markveligod/exam/raw/master/examRank03/img/micro.gif)
 ![](https://github.com/markveligod/exam/raw/master/examRank03/img/mini.gif)
 
-## :black_square_button: Exam Rank 04
+## :white_check_mark: Exam Rank 04  
+Original link to the subjects repository: [click](https://github.com/Glagan/42-exam-rank-04)  
+  
+  
+| Title | Description | Allowed functions | level of difficulty |
+|:-----:|-------------|-------------------|:-------------------:|
+| microshell |Write a program that will behave like executing a shell command|malloc, free, write, close, fork, waitpid, signal, kill, exit, chdir, execve, dup, dup2, pipe, strcmp, strncmp|:star::star::star::star:|
+
+### Running tests
+![](https://github.com/markveligod/exam/raw/master/examRank04/img/microshell.gif)
+
+
+## :black_square_button: Exam Rank 05
 (very soon)
