@@ -1,20 +1,17 @@
 #include "Warlock.hpp"
 
-int main(void)
+int main()
 {
-	std::cout << "--- Constructors:\n";
-	// Warlock warlock; // Doesn't compile
-	Warlock richard("Richard", "Master of the Universe");
-	// Warlock warlock(richard); // Doesn't compile
-	// Warlock warlock = richard; // Doesn't compile
+  Warlock const richard("Richard", "Mistress of Magma");
+  richard.introduce();
+  std::cout << richard.getName() << " - " << richard.getTitle() << std::endl;
 
-	std::cout << "--- Introduce:\n";
-	richard.introduce();
+  Warlock* jack = new Warlock("Jack", "the Long");
+  jack->introduce();
+  jack->setTitle("the Mighty");
+  jack->introduce();
 
-	std::cout << "--- New Title:\n";
-	richard.setTitle("Master of the Earth");
-	richard.introduce();
+  delete jack;
 
-	std::cout << "--- Destructors:\n";
-	return (0);
+  return (0);
 }
