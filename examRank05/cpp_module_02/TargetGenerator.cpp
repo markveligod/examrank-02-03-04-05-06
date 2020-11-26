@@ -11,6 +11,7 @@ TargetGenerator::~TargetGenerator()
         delete *it_begin;
         ++it_begin;
     }
+    this->targets.clear();
 }
 
 void TargetGenerator::learnTargetType(ATarget *target)

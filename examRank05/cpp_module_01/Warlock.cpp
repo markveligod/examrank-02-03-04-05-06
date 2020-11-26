@@ -17,6 +17,7 @@ Warlock::~Warlock()
         delete *it_begin;
         ++it_begin;
     }
+    this->spells.clear();
 }
 
 std::string const &Warlock::getName() const

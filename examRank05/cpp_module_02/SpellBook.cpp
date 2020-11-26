@@ -11,6 +11,7 @@ SpellBook::~SpellBook()
         delete *it_begin;
         ++it_begin;
     }
+    this->spells.clear();
 }
 
 void SpellBook::learnSpell(ASpell *spell) {
