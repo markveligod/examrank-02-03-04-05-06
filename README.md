@@ -42,5 +42,25 @@ To check for leaked file descriptors, use the command `lsof -c microshell`. Pay 
 ![](https://github.com/markveligod/exam/raw/master/examRank04/img/microshell.gif)
 
 
-## :black_square_button: Exam Rank 05
+
+## :white_check_mark: Exam Rank 05
+### Hint
+:heavy_exclamation_mark: Cpp_module_01 contains an intentional typo in the task description:  
+:heavy_multiplication_x: (LittleKid.hpp LittleKid.cpp)  
+:heavy_check_mark: (Dummy.hpp Dummy.cpp)  
+  
+:heavy_exclamation_mark: Also cpp_module_02 contains an intentional typo in the class Polymorph:  
+:heavy_multiplication_x: ("turned into critter")  
+:heavy_check_mark: ("turned into a critter")  
+  
+be careful...  
+### Review
+| Title | Description | Allowed functions | level of difficulty |
+|:-----:|:-----------:|:-----------------:|:-------------------:|
+| cpp_module_02 | Polymorphism | All |:star::star::star:|
+| cpp_module_01 | Inheritance | All |:star::star:|
+| cpp_module_00 | Encapsulation | All |:star:|
+
+
+## :black_square_button: Exam Rank 06
 (very soon)
