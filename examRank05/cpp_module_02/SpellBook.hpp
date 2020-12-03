@@ -2,22 +2,20 @@
 
 #include "ASpell.hpp"
 #include <vector>
-#include <cstdlib>
 
 class SpellBook
 {
     private:
-    	std::vector<ASpell*> spells;
-
-	    SpellBook(SpellBook const &other);
-	    SpellBook &operator=(SpellBook const &other);
+        std::vector<ASpell *> arr_spell;
 
     public:
-	    SpellBook();
-	    ~SpellBook();
+        SpellBook();
+        SpellBook(SpellBook const &other);
+        SpellBook &operator=(SpellBook const &other);
+        ~SpellBook();
 
-	    void learnSpell(ASpell *spell);
-	    void forgetSpell(std::string const &spellName);
-	    ASpell *generateSpell(std::string const &spellName);
-
+        void learnSpell(ASpell *aspell_ptr);
+        void forgetSpell(std::string const &name);
+        ASpell* createSpell(std::string const &name);
+        
 };

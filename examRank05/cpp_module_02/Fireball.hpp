@@ -4,9 +4,9 @@
 
 class Fireball: public ASpell
 {
-public:
-	Fireball();
-	~Fireball();
+    public:
+        Fireball();
+        ~Fireball();
 
-	virtual ASpell *clone(void) const;
+        virtual ASpell *clone() const;
 };

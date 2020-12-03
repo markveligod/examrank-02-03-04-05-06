@@ -4,9 +4,9 @@
 
 class Polymorph: public ASpell
 {
-public:
-	Polymorph();
-	~Polymorph();
-	
-	virtual ASpell *clone(void) const;
+    public:
+        Polymorph();
+        ~Polymorph();
+
+        virtual ASpell *clone() const;
 };

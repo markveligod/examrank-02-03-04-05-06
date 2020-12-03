@@ -1,9 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
 #include "ASpell.hpp"
 #include "ATarget.hpp"
+#include <vector>
 
 class Warlock
 {
@@ -13,10 +13,9 @@ class Warlock
 
         Warlock();
         Warlock(Warlock const &other);
-
         Warlock &operator=(Warlock const &other);
 
-        std::vector<ASpell*> spells;
+        std::vector<ASpell *> arr;
     public:
         Warlock(std::string const &name, std::string const &title);
         ~Warlock();
@@ -28,7 +27,7 @@ class Warlock
 
         void introduce() const;
 
-        void learnSpell(ASpell *spell);
-	    void forgetSpell(std::string const &spellName);
-	    void launchSpell(std::string const &spellName, ATarget const &target);
+        void learnSpell(ASpell *aspell_ptr);
+        void forgetSpell(std::string name);
+        void launchSpell(std::string name, ATarget const &atarget_ref);
 };

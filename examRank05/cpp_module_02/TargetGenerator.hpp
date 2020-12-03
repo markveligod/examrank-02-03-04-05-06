@@ -1,21 +1,20 @@
 #pragma once
 
-#include <vector>
 #include "ATarget.hpp"
+#include <vector>
 
 class TargetGenerator
 {
     private:
-	    std::vector<ATarget*> targets;
-
-	    TargetGenerator(TargetGenerator const &other);
-	    TargetGenerator &operator=(TargetGenerator const &other);
+        std::vector<ATarget *> arr_target;
 
     public:
-	    TargetGenerator();
-	    ~TargetGenerator();
+        TargetGenerator();
+        TargetGenerator(TargetGenerator const &other);
+        TargetGenerator &operator=(TargetGenerator const &other);
+        ~TargetGenerator();
 
-	    void learnTargetType(ATarget *target);
-	    void forgetTargetType(std::string const &name);
-	    ATarget *createTarget(std::string const &name);
+        void learnTargetType(ATarget *target_ptr);
+        void forgetTargetType(std::string const &name);
+        ATarget* createTarget(std::string const &name);
 };
