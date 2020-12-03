@@ -13,7 +13,7 @@ class TargetGenerator
 
     public:
 	    TargetGenerator();
-	    virtual ~TargetGenerator();
+	    ~TargetGenerator();
 
 	    void learnTargetType(ATarget *target);
 	    void forgetTargetType(std::string const &name);

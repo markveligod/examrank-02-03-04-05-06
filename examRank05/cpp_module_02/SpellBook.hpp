@@ -14,7 +14,7 @@ class SpellBook
 
     public:
 	    SpellBook();
-	    virtual ~SpellBook();
+	    ~SpellBook();
 
 	    void learnSpell(ASpell *spell);
 	    void forgetSpell(std::string const &spellName);
