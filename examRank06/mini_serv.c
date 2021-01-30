@@ -113,7 +113,6 @@ int main(int ac, char **av)
     t_client *cl = NULL;
     int result;
     int id;
-    struct timeval tv;
 
     if (ac != 2)
     {
@@ -167,8 +166,6 @@ int main(int ac, char **av)
 
 	len = sizeof(cli);
     g_number = 0;
-    tv.tv_sec = 5;
-    tv.tv_usec = 0;
     while(1)
     {
         // write(1, "Debug loop\n", strlen("Debug loop\n"));
