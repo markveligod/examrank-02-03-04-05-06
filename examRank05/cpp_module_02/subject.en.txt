@@ -17,7 +17,7 @@ FORBIDDEN and its use would result in a -42.
 Create the following two spells, on the same model as Fwoosh:
 
 * Fireball (Name: "Fireball", Effects: "burnt to a crisp")
-* Polymorph (Name: "Polymorph", Effects: "turned into critter")
+* Polymorph (Name: "Polymorph", Effects: "turned into a critter")
 
 In addition to this, just so he won't have only dummy to attack, let's make a
 new target for him, which will be the BrickWall (Type: "Inconspicuous Red-brick Wall").
