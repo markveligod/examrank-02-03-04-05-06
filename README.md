@@ -44,16 +44,6 @@ To check for leaked file descriptors, use the command `lsof -c microshell`. Pay 
 
 
 ## :white_check_mark: Exam Rank 05
-### Hint
-:heavy_exclamation_mark: Cpp_module_01 contains an intentional typo in the task description:  
-:heavy_multiplication_x: (LittleKid.hpp LittleKid.cpp)  
-:heavy_check_mark: (Dummy.hpp Dummy.cpp)  
-  
-:heavy_exclamation_mark: Also cpp_module_02 contains an intentional typo in the class Polymorph:  
-:heavy_multiplication_x: ("turned into critter")  
-:heavy_check_mark: ("turned into a critter")  
-  
-be careful...  
 ### Review
 | Title | Description | Allowed functions | level of difficulty |
 |:-----:|:-----------:|:-----------------:|:-------------------:|
