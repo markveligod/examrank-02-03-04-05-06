@@ -70,7 +70,7 @@ void send_all(t_client *cl, int fd, char *str)
             send(temp->fd, str, strlen(str), 0);
         temp = temp->next;
     }
-    write(1, str, strlen(str));
+    // write(1, str, strlen(str));
 }
 
 int remove_client(t_client **cl, int fd)
@@ -157,7 +157,7 @@ int main(int ac, char **av)
         exit(1);
 	}
 
-    if ((buff = malloc(4096)) == NULL)
+    if ((buff = malloc(4097)) == NULL)
 	{
 		write(2, "Fatal error\n", 12);
 		close(sockfd);
@@ -186,14 +186,14 @@ int main(int ac, char **av)
 					sprintf(str, "server: client %d just arrived\n", id);
 					send_all(cl, connfd, str);
 				}
-                //debug
-                printf("DEBUG new connection\n");
-                t_client *temp = cl;
-                while (temp)
-                {
-                    printf("Id: %d FD: %d\n", temp->id, temp->fd);
-                    temp = temp->next;
-                }
+                // //debug
+                // printf("DEBUG new connection\n");
+                // t_client *temp = cl;
+                // while (temp)
+                // {
+                //     printf("Id: %d FD: %d\n", temp->id, temp->fd);
+                //     temp = temp->next;
+                // }
 			}
             else
             {
@@ -206,7 +206,8 @@ int main(int ac, char **av)
                     if (FD_ISSET(connfd, &set_read))
                     {
                         result = recv(connfd, buff, 4096, 0);
-                        printf("Result: %d STR: %s", result, buff);
+                        buff[result] = '\0';
+                        // printf("Result: %d STR: %s", result, buff);
                         if (result == 0)
                         {  //disconnect
                             id = remove_client(&cl, connfd);
