@@ -61,7 +61,7 @@ void	send_all(int fd, char *str_req)
 
     while (temp)
     {
-        if (temp->fd != fd)
+        if (temp->fd != fd && FD_ISSET(temp->fd, &cpy_write))
         {
             if (send(temp->fd, str_req, strlen(str_req), 0) < 0)
                 fatal();
@@ -96,7 +96,7 @@ int		add_client_to_list(int fd)
 void add_client()
 {
     struct sockaddr_in clientaddr;
-    int len = sizeof(clientaddr);
+    socklen_t len = sizeof(clientaddr);
     int client_fd;
 
     if ((client_fd = accept(sock_fd, (struct sockaddr *)&clientaddr, &len)) < 0)
