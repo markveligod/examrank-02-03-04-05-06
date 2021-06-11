@@ -1,4 +1,4 @@
-# :black_square_button: EXAM (project 2020)
+# :white_check_mark: EXAM (project 2020-2021)
 Exams of the new graph.  
 Subjects are in the folder of each exercises, along with a solution and a test file.  
 At the same time, I have presented the code as a sample for solving each of the functions.if you find any bug, write to "issues".  
@@ -52,5 +52,12 @@ To check for leaked file descriptors, use the command `lsof -c microshell`. Pay 
 | cpp_module_00 | Encapsulation | All |:star:|
 
 
-## :black_square_button: Exam Rank 06
-(very soon)
+## :white_check_mark: Exam Rank 06
+:bangbang: Attention: on the exam on the first attempt, the 8 test will fail. Just do grademe again.  
+
+## 📫 Other
+:bangbang: Attention: if you see any changes in the exam or there is a more elegant solution, make a pull request.
+
+**:copyright:Authors:**  
+  
+*[Mark Veligod](https://github.com/markveligod)*  
