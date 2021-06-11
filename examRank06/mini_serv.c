@@ -162,8 +162,8 @@ int main(int ac, char **av)
     uint16_t port = atoi(av[1]);
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET; 
-	servaddr.sin_addr.s_addr = 127 | (1 << 24); //127.0.0.1
-	servaddr.sin_port = port >> 8 | port << 8;
+	servaddr.sin_addr.s_addr = htonl(2130706433); //127.0.0.1
+	servaddr.sin_port = htons(port);
 
     if ((sock_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
         fatal();
