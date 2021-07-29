@@ -222,7 +222,7 @@ void exec_cmds(t_base *ptr, char **env)
 **====================================
 */
 
-void clear_leaks(t_base *ptr)
+void free_all(t_base *ptr)
 {
 	t_base *temp;
 	int i;
@@ -276,7 +276,7 @@ int main(int ac, char **av, char **env)
 	printf("END\n");*/
 		if (ptr)
 			exec_cmds(ptr, env);
-		clear_leaks(ptr);
+		free_all(ptr);
 	}
 	return (0);
 }
