@@ -2,13 +2,6 @@
 
 SpellBook::SpellBook() {}
 
-SpellBook::SpellBook(SpellBook const &other) { *this = other;}
-SpellBook &SpellBook::operator=(SpellBook const &other)
-{
-    this->arr_spell = other.arr_spell;
-    return (*this);
-}
-
 SpellBook::~SpellBook()
 {
     std::vector<ASpell *>::iterator it_begin = this->arr_spell.begin();

@@ -3,17 +3,6 @@
 TargetGenerator::TargetGenerator()
 {}
 
-TargetGenerator::TargetGenerator(TargetGenerator const &other)
-{
-    *this = other;
-}
-
-TargetGenerator &TargetGenerator::operator=(TargetGenerator const &other)
-{
-    this->arr_target = other.arr_target;
-    return (*this);
-}
-
 TargetGenerator::~TargetGenerator()
 {
     std::vector<ATarget *>::iterator it_begin = this->arr_target.begin();

@@ -8,10 +8,11 @@ class SpellBook
     private:
         std::vector<ASpell *> arr_spell;
 
-    public:
-        SpellBook();
         SpellBook(SpellBook const &other);
         SpellBook &operator=(SpellBook const &other);
+        
+    public:
+        SpellBook();
         ~SpellBook();
 
         void learnSpell(ASpell *aspell_ptr);
