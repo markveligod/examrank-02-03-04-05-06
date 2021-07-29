@@ -8,10 +8,11 @@ class TargetGenerator
     private:
         std::vector<ATarget *> arr_target;
 
-    public:
-        TargetGenerator();
         TargetGenerator(TargetGenerator const &other);
         TargetGenerator &operator=(TargetGenerator const &other);
+        
+    public:
+        TargetGenerator();
         ~TargetGenerator();
 
         void learnTargetType(ATarget *target_ptr);
