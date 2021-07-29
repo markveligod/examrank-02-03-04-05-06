@@ -174,9 +174,9 @@ void exec_cmd(t_base *temp, char **env)
 		exit_fatal();
 	else if (pid == 0) //child
 	{
-		if (temp->type == TYPE_PIPE && dup2(temp->fd[1], STDOUT) < 0)
+		if (temp->type == TYPE_PIPE && dup2(temp->fd[STDOUT], STDOUT) < 0)
 			exit_fatal();
-		if (temp->prev && temp->prev->type == TYPE_PIPE && dup2(temp->prev->fd[0], STDIN) < 0)
+		if (temp->prev && temp->prev->type == TYPE_PIPE && dup2(temp->prev->fd[STDIN], STDIN) < 0)
 			exit_fatal();
 		if ((execve(temp->argv[0], temp->argv, env)) < 0)
 			exit_execve(temp->argv[0]);
@@ -187,12 +187,12 @@ void exec_cmd(t_base *temp, char **env)
 		waitpid(pid, &status, 0);
 		if (pipe_open)
 		{
-			close(temp->fd[1]);
+			close(temp->fd[STDOUT]);
 			if (!temp->next || temp->type == TYPE_BREAK)
-				close(temp->fd[0]);
+				close(temp->fd[STDIN]);
 		}
 		if (temp->prev && temp->prev->type == TYPE_PIPE)
-			close(temp->prev->fd[0]);
+			close(temp->prev->fd[STDIN]);
 	}
 }
 
