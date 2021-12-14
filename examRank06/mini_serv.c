@@ -194,7 +194,14 @@ int main(int ac, char **av)
                 }
                 else
                 {
-                    if (recv(fd, str, sizeof(str), 0) <= 0)
+			int ret_recv = 1000;
+			while (ret_recv == 1000 || str[strlen(str) - 1] != '\n')
+			{
+				ret_recv = recv(fd, str + strlen(str), 1000, 0);
+				if (ret_recv <= 0)
+					break ;
+			}
+                    if (ret_recv <= 0)
                     {
                         bzero(&msg, sizeof(msg));
                         sprintf(msg, "server: client %d just left\n", rm_client(fd));
