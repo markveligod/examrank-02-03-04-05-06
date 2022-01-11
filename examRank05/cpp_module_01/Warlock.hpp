@@ -3,7 +3,7 @@
 #include <iostream>
 #include "ASpell.hpp"
 #include "ATarget.hpp"
-#include <vector>
+#include <map>
 
 class Warlock
 {
@@ -15,7 +15,7 @@ class Warlock
         Warlock(Warlock const &other);
         Warlock &operator=(Warlock const &other);
 
-        std::vector<ASpell *> arr;
+        std::map<std::string, ASpell *> arr;
     public:
         Warlock(std::string const &name, std::string const &title);
         ~Warlock();
