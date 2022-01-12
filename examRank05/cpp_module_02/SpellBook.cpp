@@ -4,59 +4,31 @@ SpellBook::SpellBook() {}
 
 SpellBook::~SpellBook()
 {
-    std::vector<ASpell *>::iterator it_begin = this->arr_spell.begin();
-    std::vector<ASpell *>::iterator it_end = this->arr_spell.end();
+    std::map<std::string, ASpell *>::iterator it_begin = this->arr_spell.begin();
+    std::map<std::string, ASpell *>::iterator it_end = this->arr_spell.end();
     while (it_begin != it_end)
     {
-        delete *it_begin;
+        delete it_begin->second;
         ++it_begin;
     }
     this->arr_spell.clear();
 }
 
-void SpellBook::learnSpell(ASpell *aspell_ptr)
+void SpellBook::learnSpell(ASpell* spell_ptr)
 {
-    std::vector<ASpell *>::iterator it_begin = this->arr_spell.begin();
-    std::vector<ASpell *>::iterator it_end = this->arr_spell.end();
-    if (aspell_ptr)
-    {
-        while (it_begin != it_end)
-        {
-            if ((*it_begin)->getName() == aspell_ptr->getName())
-                return ;
-            ++it_begin;
-        }
-        this->arr_spell.push_back(aspell_ptr->clone());
-    }
+    if (spell_ptr)
+        arr_spell.insert(std::pair<std::string, ASpell *>(spell_ptr->getName(), spell_ptr->clone()));
 }
 
-void SpellBook::forgetSpell(std::string const &name)
+void SpellBook::forgetSpell(std::string const &spell_name)
 {
-    std::vector<ASpell *>::iterator it_begin = this->arr_spell.begin();
-    std::vector<ASpell *>::iterator it_end = this->arr_spell.end();
-    while (it_begin != it_end)
-    {
-        if ((*it_begin)->getName() == name)
-        {
-            delete *it_begin;
-            this->arr_spell.erase(it_begin);
-            return ;
-        }
-        ++it_begin;
-    }
+    arr_spell.erase(spell_name);
 }
 
-ASpell* SpellBook::createSpell(std::string const &name)
+ASpell* SpellBook::createSpell(std::string const &spell_name)
 {
-    std::vector<ASpell *>::iterator it_begin = this->arr_spell.begin();
-    std::vector<ASpell *>::iterator it_end = this->arr_spell.end();
-    while (it_begin != it_end)
-    {
-        if ((*it_begin)->getName() == name)
-            return (*it_begin);
-        ++it_begin;
-    }
-    return (NULL);
+    std::map<std::string, ASpell *>::iterator it = arr_spell.find(spell_name);
+    if (it != arr_spell.end())
+        return arr_spell[spell_name];
+    return NULL;
 }
-
-        

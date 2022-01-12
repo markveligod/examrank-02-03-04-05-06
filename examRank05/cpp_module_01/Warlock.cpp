@@ -10,11 +10,11 @@ Warlock::Warlock(std::string const &name, std::string const &title)
 Warlock::~Warlock()
 {
     std::cout << this->name << ": My job here is done!\n";
-    std::vector<ASpell *>::iterator it_begin = this->arr.begin();
-    std::vector<ASpell *>::iterator it_end = this->arr.end();
+    std::map<std::string, ASpell *>::iterator it_begin = this->arr.begin();
+    std::map<std::string, ASpell *>::iterator it_end = this->arr.end();
     while (it_begin != it_end)
     {
-        delete *it_begin;
+        delete it_begin->second;
         ++it_begin;
     }
     this->arr.clear();
@@ -27,49 +27,20 @@ void Warlock::setTitle(std::string const &title) { this->title = title;}
 
 void Warlock::introduce() const { std::cout << this->name << ": I am " << this->name << ", " << this->title << "!\n";}
 
-void Warlock::learnSpell(ASpell *aspell_ptr)
+void Warlock::learnSpell(ASpell* spell_ptr)
 {
-    std::vector<ASpell *>::iterator it_begin = this->arr.begin();
-    std::vector<ASpell *>::iterator it_end = this->arr.end();
-    if (aspell_ptr)
-    {
-        while (it_begin != it_end)
-        {
-            if ((*it_begin)->getName() == aspell_ptr->getName())
-                return ;
-            ++it_begin;
-        }
-        this->arr.push_back(aspell_ptr->clone());
-    }
+	if (spell_ptr)
+		arr.insert(std::pair<std::string, ASpell *>(spell_ptr->getName(), spell_ptr->clone()));
 }
 
-void Warlock::forgetSpell(std::string name)
+void Warlock::forgetSpell(std::string spell_name)
 {
-    std::vector<ASpell *>::iterator it_begin = this->arr.begin();
-    std::vector<ASpell *>::iterator it_end = this->arr.end();
-    while (it_begin != it_end)
-    {
-        if ((*it_begin)->getName() == name)
-        {
-            delete *it_begin;
-            this->arr.erase(it_begin);
-            return ;
-        }
-        ++it_begin;
-    }
+	arr.erase(spell_name);
 }
 
-void Warlock::launchSpell(std::string name, ATarget const &atarget_ref)
+void Warlock::launchSpell(std::string spell_name, ATarget const &target_ref)
 {
-    std::vector<ASpell *>::iterator it_begin = this->arr.begin();
-    std::vector<ASpell *>::iterator it_end = this->arr.end();
-    while (it_begin != it_end)
-    {
-        if ((*it_begin)->getName() == name)
-        {
-            (*it_begin)->launch(atarget_ref);
-            return ;
-        }
-        ++it_begin;
-    }
+	ASpell* spell = arr[spell_name];
+	if (spell)
+		spell->launch(target_ref);
 }

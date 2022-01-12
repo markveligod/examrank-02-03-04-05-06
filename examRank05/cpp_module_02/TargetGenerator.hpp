@@ -1,16 +1,16 @@
 #pragma once
 
 #include "ATarget.hpp"
-#include <vector>
+#include <map>
 
 class TargetGenerator
 {
     private:
-        std::vector<ATarget *> arr_target;
+        std::map<std::string, ATarget *> arr_target;
 
         TargetGenerator(TargetGenerator const &other);
         TargetGenerator &operator=(TargetGenerator const &other);
-        
+
     public:
         TargetGenerator();
         ~TargetGenerator();
