@@ -1,58 +1,35 @@
 #include <unistd.h>
 
-void    ft_putchar(char c)
+void	_union(char *s1, char *s2)
 {
-    write(1, &c, 1);
+	int	tab[1000] = {0};
+	int	i = 0;
+
+	while (s1[i])
+	{
+		if (tab[(int)s1[i]] == 0)
+		{
+			(tab[(int)s1[i]] = 1);
+			write(1, &s1[i], 1);
+		}
+		i++;
+	}
+	i = 0;
+	while (s2[i])
+	{
+		if (tab[(int)s2[i]] == 0)
+		{
+			(tab[(int)s2[i]] = 1);
+			write(1, &s2[i], 1);
+		}
+		i++;
+	}
 }
 
-int     main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    int i;
-    int j;
-
-    if (ac == 3)
-    {
-        i = 0;
-        while(av[1][i])
-        {
-            j = 0;
-            while (j < i)
-            {
-                if (av[1][i] == av[1][j])
-                    break;
-                j++;
-            }
-            if (i == j)
-                ft_putchar(av[1][i]);
-            i++;
-        }
-        i = 0;
-        while(av[2][i])
-        {
-            j = 0;
-            while(av[1][j])
-            {
-                if (av[1][j] == av[2][i])
-                    break;
-                j++;
-            }
-            if (av[1][j] != '\0')
-            {
-                i++;
-                continue;
-            }
-            j = 0;
-            while (j < i)
-            {
-                if (av[2][i] == av[2][j])
-                    break;
-                j++;
-            }
-            if (i == j)
-                ft_putchar(av[2][i]);
-            i++;
-        }
-    }
-    ft_putchar('\n');
-    return (0);
+	if (ac == 3)
+		_union(av[1], av[2]);
+	write(1, "\n", 1);
+	return (0);
 }
