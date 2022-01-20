@@ -35,6 +35,9 @@ void Warlock::learnSpell(ASpell* spell_ptr)
 
 void Warlock::forgetSpell(std::string spell_name)
 {
+	std::map<std::string, ASpell *>::iterator it = arr.find(spell_name);
+	if (it != arr.end())
+		delete it->second;
 	arr.erase(spell_name);
 }
 
