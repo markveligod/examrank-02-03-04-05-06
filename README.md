@@ -1,4 +1,4 @@
-# :white_check_mark: EXAM (project 2020-2021)
+# :white_check_mark: EXAM (project 2020-2022)
 Exams of the new graph.  
 Subjects are in the folder of each exercises, along with a solution and a test file.  
 At the same time, I have presented the code as a sample for solving each of the functions.if you find any bug, write to "issues".  
