@@ -22,6 +22,9 @@ void SpellBook::learnSpell(ASpell* spell_ptr)
 
 void SpellBook::forgetSpell(std::string const &spell_name)
 {
+    std::map<std::string, ASpell *>::iterator it = arr_spell.find(spell_name);
+	if (it != arr_spell.end())
+		delete it->second;
     arr_spell.erase(spell_name);
 }
 
