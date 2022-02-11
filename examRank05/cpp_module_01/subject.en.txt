@@ -64,7 +64,7 @@ Add to the Warlock the following member functions:
   Warlock forget it. If it's not a known spell, does nothing.
 * launchSpell, takes a string (a spell name) and a reference to ATarget, that
   launches the spell on the selected target. If it's not a known spell, does
-  nothing
+  nothing.
 
 You will need a new attribute to store the spells your Warlock knows. Several
 types fit the bill, it's up to you to choose the best one.
