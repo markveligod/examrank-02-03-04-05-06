@@ -16,7 +16,6 @@ Both these functions will have to be callable on a constant Warlock.
 
 Create the following setter: 
 * setTitle, returns void and takes a reference to constant string
-
 Your Warlock will also have, in addition to whatever's required by Coplien's
 form, a constructor that takes, in this order, its name and title. Your Warlock
 will not be able to be copied, instantiated by copy, or instantiated without a

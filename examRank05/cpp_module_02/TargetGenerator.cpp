@@ -23,6 +23,9 @@ void TargetGenerator::learnTargetType(ATarget* target_ptr)
 
 void TargetGenerator::forgetTargetType(const std::string &target_name)
 {
+    std::map<std::string, ATarget *>::iterator it = arr_target.find(target_name);
+	if (it != arr_target.end())
+		delete it->second;
     arr_target.erase(target_name);
 }
 
